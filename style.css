@@ -498,3 +498,97 @@ input:focus, select:focus { border-color: #888; background: #fff; }
   main { padding-left: 28px; padding-right: 28px; }
   .menu-card { padding: 22px 24px; }
 }
+
+
+/* ===== iPhoneカレンダー表示調整 ===== */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.app-shell, main, .page, .card {
+  max-width: 100%;
+}
+
+.week-row, .calendar-grid {
+  width: 100%;
+  min-width: 0;
+}
+
+.calendar-grid {
+  gap: 4px;
+}
+
+.calendar-cell {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 3px;
+  aspect-ratio: 1 / 1;
+}
+
+.history-add-button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 16px;
+  border: 0;
+  border-radius: 14px;
+  background: #202020;
+  color: #fff;
+  font-weight: 800;
+}
+
+@media (max-width: 430px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .calendar-grid, .week-row {
+    gap: 3px;
+  }
+
+  .calendar-cell {
+    border-radius: 9px;
+    font-size: 12px;
+  }
+
+  .calendar-cell.has-work::after {
+    bottom: 4px;
+  }
+
+  .month-controller {
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+  }
+
+  .month-controller strong {
+    min-width: 0;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .card {
+    padding: 13px;
+  }
+
+  .calendar-grid, .week-row {
+    gap: 2px;
+  }
+
+  .calendar-cell {
+    border-radius: 7px;
+    font-size: 11px;
+  }
+}

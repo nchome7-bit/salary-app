@@ -315,26 +315,41 @@ function renderHistoryDetail() {
 
   if (!works.length) {
     detail.innerHTML += '<p class="muted center">この日の勤務はありません</p>';
-    return;
+  } else {
+    works.forEach(work => {
+      const result = calculateWork(work);
+      const record = document.createElement("div");
+      record.className = "work-record";
+      record.innerHTML = `
+        <div class="work-record-top">
+          <div>
+            <strong>${timeLabel(work.startHour, work.startMinute)} 〜 ${timeLabel(work.endHour, work.endMinute)}</strong>
+            <p>${work.wageType === "special" ? "特殊時給日" : "通常日"} ・ 休憩${work.breakMinutes}分</p>
+            <p>${formatMinutes(result.minutes)} ・ ${formatYen(result.salary)}</p>
+          </div>
+          <button class="edit-link">編集</button>
+        </div>
+      `;
+      record.querySelector(".edit-link").addEventListener("click", () => openEditModal(work.id));
+      detail.appendChild(record);
+    });
   }
 
-  works.forEach(work => {
-    const result = calculateWork(work);
-    const record = document.createElement("div");
-    record.className = "work-record";
-    record.innerHTML = `
-      <div class="work-record-top">
-        <div>
-          <strong>${timeLabel(work.startHour, work.startMinute)} 〜 ${timeLabel(work.endHour, work.endMinute)}</strong>
-          <p>${work.wageType === "special" ? "特殊時給日" : "通常日"} ・ 休憩${work.breakMinutes}分</p>
-          <p>${formatMinutes(result.minutes)} ・ ${formatYen(result.salary)}</p>
-        </div>
-        <button class="edit-link">編集</button>
-      </div>
-    `;
-    record.querySelector(".edit-link").addEventListener("click", () => openEditModal(work.id));
-    detail.appendChild(record);
-  });
+  const addButton = document.createElement("button");
+  addButton.className = "history-add-button";
+  addButton.textContent = "＋ この日に勤務を追加";
+  addButton.addEventListener("click", () => addWorkFromHistory(selectedHistoryDate));
+  detail.appendChild(addButton);
+}
+
+function addWorkFromHistory(date) {
+  if (!date) return;
+
+  document.getElementById("workDate").value = date;
+  setWageType("normal");
+  document.getElementById("breakMinutes").value = "0";
+  updateWorkPreview();
+  showPage("work");
 }
 
 function openEditModal(id) {
