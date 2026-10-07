@@ -1,3 +1,16 @@
+function syncDateDisplay(id) {
+  const input = document.getElementById(id);
+  input.previousElementSibling.textContent = input.value ? input.value.replace(/-/g, "/") : "日付を選択";
+}
+
+function initDateDisplays() {
+  ["workDate", "editDate"].forEach(id => {
+    const input = document.getElementById(id);
+    input.addEventListener("input", () => syncDateDisplay(id));
+    input.addEventListener("change", () => syncDateDisplay(id));
+    syncDateDisplay(id);
+  });
+}
 const STORAGE_KEY = "salaryManagerFresh_v1";
 
 const DEFAULT_STATE = {
@@ -346,6 +359,7 @@ function addWorkFromHistory(date) {
   if (!date) return;
 
   document.getElementById("workDate").value = date;
+  syncDateDisplay("workDate");
   setWageType("normal");
   document.getElementById("breakMinutes").value = "0";
   updateWorkPreview();
@@ -358,6 +372,7 @@ function openEditModal(id) {
 
   document.getElementById("editId").value = work.id;
   document.getElementById("editDate").value = work.date;
+  syncDateDisplay("editDate");
   document.getElementById("editWageType").value = work.wageType;
   document.getElementById("editStartHour").value = work.startHour;
   document.getElementById("editStartMinute").value = work.startMinute;
@@ -553,6 +568,7 @@ function init() {
   fillTimeSelects("editEndHour", "editEndMinute");
 
   document.getElementById("workDate").value = dateToYmd(new Date());
+  initDateDisplays();
   document.getElementById("startHour").value = "18";
   document.getElementById("startMinute").value = "0";
   document.getElementById("endHour").value = "22";
