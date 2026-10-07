@@ -519,16 +519,22 @@ input, select { min-width: 0; max-width: 100%; font-size: 16px; }
   -webkit-appearance: none;
   appearance: none;
   text-align: left;
-  line-height: normal;
+  height: 50px;
+  padding: 12px 14px;
+  line-height: 24px;
 }
 .date-field input::-webkit-date-and-time-value {
-  min-height: 1.5em;
+  display: block;
+  height: 24px;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
   text-align: left;
 }
 .date-field input::-webkit-datetime-edit {
-  display: inline-flex;
-  align-items: center;
   padding: 0;
+  line-height: 24px;
 }
 .month-selects {
   display: grid;
